@@ -18,7 +18,6 @@ const getProduct = async (req, res) => {
 const postProduct = async (req, res) => {
   try {
     const { nombre, precio, stock } = req.body;
-    // validar campos
     const newProduct = {
       nombre,
       precio: +precio,
@@ -40,4 +39,11 @@ const putProduct = async (req, res) => {
   const actualizado = await productService.update(req.params.id, req.body);
   res.json(actualizado);
 };
-export default { getProducts, postProduct, putProduct, getProduct };
+const deleteProduct= async (req, res) => {
+  const existe = await productService.getById(req.params.id);
+  if (!existe) return res.status(404).json({ mensaje: 'Producto no encontrado' });
+
+  const resultado = await productService.remove(req.params.id);
+  res.json(resultado);
+};
+export default { getProducts, postProduct, putProduct, getProduct, deleteProduct};

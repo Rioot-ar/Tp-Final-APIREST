@@ -55,3 +55,13 @@ export const updateProduct = async (id, product) => {
     throw new Error(`Error al actualizar producto: ${error.message}`);
   }
 };
+
+export const deleteProduct = async (id) => {
+  try {
+    const productRef = doc(productCollection, id);
+    await deleteDoc(productRef);
+    return { mensaje: 'Producto eliminado correctamente' };
+  } catch (error) {
+    throw new Error(`Error al eliminar producto: ${error.message}`);
+  }
+};
