@@ -1,11 +1,17 @@
 // services
-import { getAllProducts, saveProduct } from "../models/product.model.js";
+import { getAllProducts, saveProduct, getProductById, updateProduct } from "../models/product.model.js";
 
 const getAll = async () => {
   return await getAllProducts();
 };
-const createProduct = async (product) => {
+const create = async (product) => {
   return await saveProduct(product);
 };
+const getById = async (id) => {
+  return await getProductById(id);
+};
+const update = async (id, productData) => {
+  return await updateProduct(id, productData);
+};
 
-export default { getAll, createProduct };
+export default { getAll, create,update,getById };

@@ -10,7 +10,12 @@ const getProducts = async (req, res) => {
       .json({ message: "error interno del servidor", error: error.message });
   }
 };
-const createProduct = async (req, res) => {
+const getProduct = async (req, res) => {
+  const producto = await productService.getById(req.params.id);
+  if (!producto) return res.status(404).json({ mensaje: 'Producto no encontrado' });
+  res.json(producto);
+};
+const postProduct = async (req, res) => {
   try {
     const { nombre, precio, stock } = req.body;
     // validar campos
@@ -20,7 +25,7 @@ const createProduct = async (req, res) => {
       stock: stock || 0,
     };
 
-     await productService.createProduct(newProduct);
+     await productService.create(newProduct);
     res.status(200).json({ message: "Lista de productos", payload: newProduct });
   } catch (error) {
     res
@@ -28,5 +33,11 @@ const createProduct = async (req, res) => {
       .json({ message: "error interno del servidor", error: error.message });
   }
 };
+const putProduct = async (req, res) => {
+  const existe = await productService.getById(req.params.id);
+  if (!existe) return res.status(404).json({ mensaje: 'Producto no encontrado' });
 
-export default { getProducts, createProduct };
+  const actualizado = await productService.update(req.params.id, req.body);
+  res.json(actualizado);
+};
+export default { getProducts, postProduct, putProduct, getProduct };

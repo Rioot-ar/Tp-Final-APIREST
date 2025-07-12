@@ -5,6 +5,8 @@ import productController from "../controllers/product.controller.js";
 const router = Router();
 
 router.get("/", productController.getProducts);
-router.post("/", productController.createProduct);
+router.get("/:id", productController.getProduct);
+router.post("/", productController.postProduct);
+router.put("/:id", productController.putProduct);
 
 export default router;

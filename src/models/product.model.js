@@ -20,7 +20,19 @@ export const getAllProducts = async () => {
 
     return products;
   } catch (error) {
-    throw new Error("Error", error.message);
+    throw new Error("Error al obtener productos", error.message);
+  }
+};
+export const getProductById = async (id) => {
+  try {
+    const productRef = doc(productCollection, id);
+    const productSnap = await getDoc(productRef);
+
+    if (!productSnap.exists()) return null;
+
+    return { id: productSnap.id, ...productSnap.data() };
+  } catch (error) {
+    throw new Error(`Error al obtener el producto: ${error.message}`);
   }
 };
 
@@ -29,6 +41,17 @@ export const saveProduct = async (product) => {
     const newProduct = await addDoc(productCollection, product);
     return newProduct
   } catch (error) {
-    throw new Error("Error", error.message);
+    throw new Error("Error al guardar el producto", error.message);
+  }
+};
+
+export const updateProduct = async (id, product) => {
+  try {
+    const productRef = doc(productCollection, id);
+    await updateDoc(productRef, product);
+    const updatedDoc = await getDoc(productRef);
+    return { id: updatedDoc.id, ...updatedDoc.data() };
+  } catch (error) {
+    throw new Error(`Error al actualizar producto: ${error.message}`);
   }
 };
