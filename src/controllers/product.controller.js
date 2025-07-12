@@ -12,12 +12,12 @@ const getProducts = async (req, res) => {
 };
 const createProduct = async (req, res) => {
   try {
-    const { nombre, precio, disponible } = req.body;
+    const { nombre, precio, stock } = req.body;
     // validar campos
     const newProduct = {
       nombre,
       precio: +precio,
-      disponible: disponible || false,
+      stock: stock || 0,
     };
 
      await productService.createProduct(newProduct);
