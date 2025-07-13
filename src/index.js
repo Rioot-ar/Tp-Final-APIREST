@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { join, __dirname } from "./utils/index.js";
 import productRoutes from "./routes/product.route.js";
+import authRoutes from "./routes/auth.route.js"
 
 // import {db}from './config/db.js'
 //settings
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
   res.json({ title: "Home Page" });
 });
 app.use("/api/products", productRoutes);
+app.use("/auth", authRoutes);
 
 app.use((req,res,next)=>{
   res.status(404).send('Recurso no encontrado o ruta invalida')

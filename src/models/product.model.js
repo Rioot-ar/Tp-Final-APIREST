@@ -28,7 +28,7 @@ export const getProductById = async (id) => {
     const productRef = doc(productCollection, id);
     const productSnap = await getDoc(productRef);
 
-    if (!productSnap.exists()) return null;
+    if (!productSnap.exists()) res.status(404).json({ error: 'Producto no encontrado' });
 
     return { id: productSnap.id, ...productSnap.data() };
   } catch (error) {
@@ -59,6 +59,7 @@ export const updateProduct = async (id, product) => {
 export const deleteProduct = async (id) => {
   try {
     const productRef = doc(productCollection, id);
+    if (!productRef.exists()) res.status(404).json({ error: 'Producto no encontrado' });;
     await deleteDoc(productRef);
     return { mensaje: 'Producto eliminado correctamente' };
   } catch (error) {
