@@ -8,7 +8,9 @@ import { authentication } from "./middlewares/authentication.js";
 // import {db}from './config/db.js'
 //settings
 const app = express();
-app.set("PORT", 5000);
+const PORT = process.env.PORT || 3000;
+app.set("PORT",PORT);
+
 
 // middlewares
 app.use(cors())
