@@ -3,6 +3,7 @@ import cors from "cors";
 import { join, __dirname } from "./utils/index.js";
 import productRoutes from "./routes/product.route.js";
 import authRoutes from "./routes/auth.route.js"
+import { authentication } from "./middlewares/authentication.js";
 
 // import {db}from './config/db.js'
 //settings
@@ -19,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.json({ title: "Home Page" });
 });
-app.use("/api/products", productRoutes);
+app.use("/api/products",authentication ,productRoutes);
 app.use("/auth", authRoutes);
 
 app.use((req,res,next)=>{
